@@ -519,9 +519,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- **Leak Sithisak** - [@yourgithub](https://github.com/yourusername)
-- **Song Kimvisal** - [@yourgithub](https://github.com/yourusername)
-- **Sim Kimchhun** - [@yourgithub](https://github.com/yourusername)
+- **Leak Sithisak** - [@github](https://github.com/Sithi-sak)
+- **Song Kimvisal** - [@github](https://github.com/songKimvisal)
+- **Sim Kimchhun** - [@github](https://github.com/kimchhunnn2912)
 
 ## 🙏 Acknowledgments
 
