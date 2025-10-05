@@ -6,13 +6,12 @@ const prisma = new PrismaClient();
  * Get all seats for a specific showtime with booking status
  * GET /api/showtimes/:showtimeId/seats
  *
- * WHY: This is the core of seat selection!
  * - User picks a showtime → needs to see which seats are available
  * - Shows seat layout (rows A-H, columns 1-12)
  * - Marks which seats are already booked
  * - Shows pricing per seat type (regular vs premium)
  *
- * HOW IT WORKS:
+ * How it works is:
  * 1. Get all seats for the theater/screen
  * 2. Check which seats are booked for THIS specific showtime
  * 3. Mark booked seats as unavailable
@@ -71,18 +70,17 @@ export const getSeatsByShowtime = async (req, res) => {
         isActive: true,
       },
       orderBy: [
-        { rowName: 'asc' },    // Sort by row (A, B, C...)
-        { seatColumn: 'asc' }, // Then by column (1, 2, 3...)
+        { rowName: 'asc' },
+        { seatColumn: 'asc' },
       ],
     });
 
     // Step 4: Get all bookings for this specific showtime
-    // Find which seats are already taken by other users
     const bookedSeats = await prisma.booking.findMany({
       where: {
         showtimeId: parseInt(showtimeId),
         status: {
-          in: ['confirmed', 'pending'], // Only count confirmed/pending bookings
+          in: ['confirmed', 'pending'],
         },
       },
       include: {
@@ -95,7 +93,6 @@ export const getSeatsByShowtime = async (req, res) => {
     });
 
     // Step 5: Create a Set of booked seat IDs for fast lookup
-    // Why Set? O(1) lookup time instead of O(n) with array.includes()
     const bookedSeatIds = new Set();
     bookedSeats.forEach((booking) => {
       booking.bookingSeats.forEach((bookingSeat) => {
@@ -173,14 +170,8 @@ export const getSeatsByShowtime = async (req, res) => {
  * Check if specific seats are available
  * POST /api/showtimes/:showtimeId/seats/check
  *
- * WHY: Before creating a booking, verify seats are still available
  * - Prevents double-booking
  * - User might be slow to checkout, seat could be taken
- *
- * REQUEST BODY:
- * {
- *   "seatIds": [1, 2, 3]
- * }
  */
 export const checkSeatAvailability = async (req, res) => {
   try {

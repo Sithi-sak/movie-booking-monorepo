@@ -10,9 +10,8 @@ export const getAllMovies = async (req, res) => {
   try {
     const { status, genre, search } = req.query;
 
-    // Build filter object based on query parameters
     const where = {
-      isActive: true, // Only show active movies
+      isActive: true,
     };
 
     // Filter by status (streaming_now or coming_soon)
@@ -23,7 +22,7 @@ export const getAllMovies = async (req, res) => {
     // Filter by genre
     if (genre) {
       where.genre = {
-        contains: genre, // Partial match (genre can have multiple values)
+        contains: genre,
       };
     }
 
@@ -31,7 +30,7 @@ export const getAllMovies = async (req, res) => {
     if (search) {
       where.title = {
         contains: search,
-        mode: 'insensitive', // Case-insensitive search
+        mode: 'insensitive',
       };
     }
 
@@ -39,14 +38,14 @@ export const getAllMovies = async (req, res) => {
     const movies = await prisma.movie.findMany({
       where,
       orderBy: {
-        releaseDate: 'desc', // Newest first
+        releaseDate: 'desc',
       },
       include: {
         showtimes: {
           where: {
             isActive: true,
             showTime: {
-              gte: new Date(), // Only future showtimes
+              gte: new Date(),
             },
           },
           select: {
@@ -62,18 +61,17 @@ export const getAllMovies = async (req, res) => {
               },
             },
           },
-          take: 5, // Limit to 5 showtimes per movie
+          take: 5,
         },
       },
     });
 
-    // Transform showtimes to match frontend expectations
     const moviesWithShowtimes = movies.map((movie) => ({
       ...movie,
       showtimes: movie.showtimes.map((showtime) =>
         showtime.showTime.toISOString()
       ),
-      showtimesDetails: movie.showtimes, // Keep full details
+      showtimesDetails: movie.showtimes,
     }));
 
     res.status(200).json({
@@ -109,7 +107,7 @@ export const getMovieById = async (req, res) => {
           where: {
             isActive: true,
             showTime: {
-              gte: new Date(), // Only future showtimes
+              gte: new Date(),
             },
           },
           include: {
@@ -218,7 +216,7 @@ export const getMoviesByStatus = async (req, res) => {
       showtimes: movie.showtimes.map((showtime) =>
         showtime.showTime.toISOString()
       ),
-      showtimesDetails: movie.showtimes, // Keep full details
+      showtimesDetails: movie.showtimes,
     }));
 
     res.status(200).json({

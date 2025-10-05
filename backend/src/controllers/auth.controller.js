@@ -53,7 +53,6 @@ export const register = async (req, res) => {
       email: user.email,
     });
 
-    // 6. Return success response (don't send password!)
     res.status(201).json({
       success: true,
       message: 'User registered successfully',

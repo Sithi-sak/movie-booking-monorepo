@@ -5,12 +5,6 @@ const prisma = new PrismaClient();
 
 /**
  * Generate a unique booking reference
- * Format: BK-XXXXXX (e.g., BK-A3F9D2)
- *
- * WHY: User-friendly ID for tracking bookings
- * - Don't expose database IDs to users
- * - Easy to read over phone/email
- * - Professional appearance
  */
 function generateBookingReference() {
   return 'BK-' + crypto.randomBytes(3).toString('hex').toUpperCase();
@@ -20,17 +14,11 @@ function generateBookingReference() {
  * Create a new booking
  * POST /api/bookings
  *
- * REQUEST BODY:
- * {
- *   "showtimeId": 1,
- *   "seatIds": [45, 46, 47]
- * }
- *
- * WHY THIS IS COMPLEX:
- * 1. Must prevent double-booking (two users clicking at same time)
- * 2. Must calculate total price correctly
- * 3. Must handle multiple seats atomically (all or nothing)
- * 4. Must validate everything before committing
+ * Why?
+ * - prevent double-booking (two users clicking at same time)
+ * - calculate total price correctly
+ * - handle multiple seats atomically (all or nothing)
+ * - validate everything before committing
  */
 export const createBooking = async (req, res) => {
   try {
@@ -101,7 +89,7 @@ export const createBooking = async (req, res) => {
     }
 
     // STEP 4: Check if seats are already booked
-    // This is CRITICAL to prevent double-booking!
+    // prevent double booking
     const existingBookings = await prisma.bookingSeat.findMany({
       where: {
         seatId: {
@@ -110,7 +98,7 @@ export const createBooking = async (req, res) => {
         booking: {
           showtimeId: parseInt(showtimeId),
           status: {
-            in: ['confirmed', 'pending'], // Don't allow booking if someone has pending/confirmed
+            in: ['confirmed', 'pending'],
           },
         },
       },
@@ -137,7 +125,7 @@ export const createBooking = async (req, res) => {
       return sum + (seat.price || showtime.price);
     }, 0);
 
-    // Add service fee (10%) and tax (8%) to match frontend calculation
+    // Add service fee (10%) and tax (8%)
     const serviceFee = subtotal * 0.10;
     const tax = subtotal * 0.08;
     const totalAmount = subtotal + serviceFee + tax;
@@ -147,7 +135,6 @@ export const createBooking = async (req, res) => {
     let isUnique = false;
 
     // Keep trying until we get a unique reference
-    // (very unlikely to collide, but we check anyway)
     while (!isUnique) {
       bookingReference = generateBookingReference();
       const existing = await prisma.booking.findUnique({
@@ -157,8 +144,6 @@ export const createBooking = async (req, res) => {
     }
 
     // STEP 7: Create booking and link seats in a TRANSACTION
-    // WHY TRANSACTION? All or nothing - prevents partial bookings
-    // If anything fails, everything rolls back
     const booking = await prisma.$transaction(async (tx) => {
       // Create the booking record
       const newBooking = await tx.booking.create({
@@ -166,7 +151,7 @@ export const createBooking = async (req, res) => {
           userId,
           showtimeId: parseInt(showtimeId),
           bookingReference,
-          seats: JSON.stringify(seats.map((s) => s.seatNumber)), // Store seat numbers as JSON
+          seats: JSON.stringify(seats.map((s) => s.seatNumber)),
           totalAmount,
           status: 'pending', // Not confirmed until payment
           paymentStatus: 'pending',
@@ -177,7 +162,7 @@ export const createBooking = async (req, res) => {
       const bookingSeatData = seatIds.map((seatId) => ({
         bookingId: newBooking.id,
         seatId: parseInt(seatId),
-        status: 'confirmed', // Seat is held for this booking
+        status: 'confirmed',
       }));
 
       await tx.bookingSeat.createMany({
@@ -243,7 +228,6 @@ export const createBooking = async (req, res) => {
  * Get all bookings for the logged-in user
  * GET /api/bookings
  *
- * WHY: User wants to see "My Bookings" page
  * - Shows all past and upcoming bookings
  * - Includes movie, theater, seats info
  */
@@ -284,7 +268,7 @@ export const getUserBookings = async (req, res) => {
         },
       },
       orderBy: {
-        bookingDate: 'desc', // Most recent first
+        bookingDate: 'desc',
       },
     });
 
@@ -330,7 +314,6 @@ export const getUserBookings = async (req, res) => {
  * Get a single booking by ID
  * GET /api/bookings/:id
  *
- * WHY: User clicks on a booking to see full details
  * - Confirmation page after booking
  * - View ticket details
  */
@@ -342,7 +325,7 @@ export const getBookingById = async (req, res) => {
     const booking = await prisma.booking.findFirst({
       where: {
         id: parseInt(id),
-        userId, // Ensure user can only see their own bookings
+        userId,
       },
       include: {
         showtime: {
@@ -407,7 +390,6 @@ export const getBookingById = async (req, res) => {
  * Cancel a booking
  * DELETE /api/bookings/:id
  *
- * WHY: User wants to cancel their booking
  * - Frees up seats for others
  * - Updates booking status to "cancelled"
  */

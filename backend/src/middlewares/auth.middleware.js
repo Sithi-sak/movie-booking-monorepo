@@ -11,7 +11,6 @@ import { verifyToken } from '../utils/jwt.js';
 export const authenticate = async (req, res, next) => {
   try {
     // 1. Get token from Authorization header
-    // Expected format: "Bearer <token>"
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -21,14 +20,12 @@ export const authenticate = async (req, res, next) => {
       });
     }
 
-    // Extract token (remove "Bearer " prefix)
     const token = authHeader.substring(7);
 
     // 2. Verify token
     const decoded = verifyToken(token);
 
     // 3. Attach user info to request object
-    // Now any route using this middleware can access req.user
     req.user = decoded;
 
     // 4. Continue to next middleware/route handler

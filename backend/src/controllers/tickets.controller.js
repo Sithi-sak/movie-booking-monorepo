@@ -5,21 +5,6 @@ const prisma = new PrismaClient();
 /**
  * Get all tickets (confirmed bookings) for logged-in user
  * GET /api/tickets
- *
- * WHY THIS API EXISTS:
- * - User wants to see "My Tickets" / "My Bookings"
- * - Shows all movies they've booked and paid for
- * - Separated into "Upcoming" and "Past" tickets
- * - Like your wallet of movie tickets!
- *
- * WHAT MAKES A "TICKET":
- * - Booking must be CONFIRMED (paid for)
- * - Payment must be COMPLETED
- * - Includes movie, theater, showtime, seats info
- *
- * DIFFERENT FROM BOOKINGS API:
- * - Bookings API: Shows ALL bookings (pending, confirmed, cancelled)
- * - Tickets API: Shows ONLY confirmed & paid bookings
  */
 export const getUserTickets = async (req, res) => {
   try {
@@ -27,18 +12,16 @@ export const getUserTickets = async (req, res) => {
     const { status } = req.query; // Optional: ?status=upcoming or ?status=past
 
     // STEP 1: Fetch all confirmed bookings for user
-    // Why these filters?
     // - userId: Only show MY tickets
     // - status: 'confirmed' = Paid and confirmed
     // - paymentStatus: 'completed' = Payment went through
     const tickets = await prisma.booking.findMany({
       where: {
         userId,
-        status: 'confirmed', // Only confirmed bookings
-        paymentStatus: 'completed', // Only paid bookings
+        status: 'confirmed',
+        paymentStatus: 'completed',
       },
       include: {
-        // Include all related data for ticket display
         showtime: {
           include: {
             movie: {
@@ -77,12 +60,11 @@ export const getUserTickets = async (req, res) => {
         },
       },
       orderBy: {
-        bookingDate: 'desc', // Most recent bookings first
+        bookingDate: 'desc',
       },
     });
 
     // STEP 2: Separate into upcoming and past tickets
-    // Why? Better UX - user sees what's coming up vs what they already watched
     const now = new Date();
 
     const upcomingTickets = tickets.filter(
@@ -94,7 +76,6 @@ export const getUserTickets = async (req, res) => {
     );
 
     // STEP 3: Format tickets for frontend
-    // Why format? Make it easier for Flutter to display
     const formatTicket = (ticket) => ({
       // Booking Info
       id: ticket.id,
@@ -139,9 +120,6 @@ export const getUserTickets = async (req, res) => {
       })),
       seatCount: ticket.bookingSeats.length,
 
-      // QR Code data (for theater scanning)
-      // In real app: Generate actual QR code image
-      // For now: Just the booking reference (theater scans this)
       qrCode: ticket.bookingReference,
 
       // Ticket status
@@ -189,11 +167,6 @@ export const getUserTickets = async (req, res) => {
 /**
  * Get a single ticket by booking ID
  * GET /api/tickets/:bookingId
- *
- * WHY: User clicks on a ticket to see full details
- * - Show at theater entrance (QR code)
- * - View ticket details before showtime
- * - Like pulling out a specific ticket from wallet
  */
 export const getTicketById = async (req, res) => {
   try {
@@ -204,7 +177,7 @@ export const getTicketById = async (req, res) => {
     const ticket = await prisma.booking.findFirst({
       where: {
         id: parseInt(bookingId),
-        userId, // Security: Only your tickets
+        userId, // only your tickets
         status: 'confirmed', // Must be confirmed
         paymentStatus: 'completed', // Must be paid
       },
@@ -304,7 +277,6 @@ export const getTicketById = async (req, res) => {
           }
         : null,
 
-      // QR Code for theater entrance
       qrCode: ticket.bookingReference,
     };
 

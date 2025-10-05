@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
  * Get showtimes with filters
  * GET /api/showtimes?movieId=1&theaterId=2&date=2025-10-01
  *
- * Why: Users need to see when and where a movie is playing
  * Example use case: User clicks "Book Tickets" on Avengers → sees all showtimes
  */
 export const getShowtimes = async (req, res) => {
@@ -71,7 +70,7 @@ export const getShowtimes = async (req, res) => {
         },
       },
       orderBy: {
-        showTime: 'asc', // Earliest shows first
+        showTime: 'asc',
       },
     });
 
@@ -95,7 +94,6 @@ export const getShowtimes = async (req, res) => {
  * Get a single showtime by ID
  * GET /api/showtimes/:id
  *
- * Why: User needs full details before selecting seats
  * Example: User clicks "7:00 PM" → sees theater info, available seats, price
  */
 export const getShowtimeById = async (req, res) => {
@@ -134,7 +132,6 @@ export const getShowtimeById = async (req, res) => {
       },
     });
 
-    // Check if showtime exists
     if (!showtime) {
       return res.status(404).json({
         success: false,
@@ -142,7 +139,6 @@ export const getShowtimeById = async (req, res) => {
       });
     }
 
-    // Check if showtime is in the past
     if (new Date(showtime.showTime) < new Date()) {
       return res.status(400).json({
         success: false,
@@ -169,7 +165,6 @@ export const getShowtimeById = async (req, res) => {
  * Get showtimes grouped by date for a movie
  * GET /api/showtimes/movie/:movieId/dates
  *
- * Why: Better UX - show dates with available showtimes
  * Example: "Tomorrow (Oct 2) - 3 showtimes available"
  */
 export const getShowtimesByMovieGroupedByDate = async (req, res) => {
@@ -198,7 +193,6 @@ export const getShowtimesByMovieGroupedByDate = async (req, res) => {
       },
     });
 
-    // Group showtimes by date
     const groupedByDate = showtimes.reduce((acc, showtime) => {
       const date = showtime.showTime.toISOString().split('T')[0]; // Get YYYY-MM-DD
 
@@ -210,7 +204,6 @@ export const getShowtimesByMovieGroupedByDate = async (req, res) => {
       return acc;
     }, {});
 
-    // Convert to array format
     const result = Object.keys(groupedByDate).map((date) => ({
       date,
       showtimes: groupedByDate[date],
