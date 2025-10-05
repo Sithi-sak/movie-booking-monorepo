@@ -162,9 +162,9 @@ class _AnimatedDeveloperCardState extends State<_AnimatedDeveloperCard>
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
+          color: Colors.white.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: Colors.white.withOpacity(0.1)),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
         ),
         child: Icon(icon, color: AppTheme.primaryRed, size: 20),
       ),

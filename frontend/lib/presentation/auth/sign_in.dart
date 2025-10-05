@@ -122,8 +122,8 @@ class _SignInState extends State<SignIn> {
                 const Text(
                   'Sign in to continue booking movies',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
+                    color: Color.fromARGB(255, 194, 194, 194),
+                    fontSize: 14,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -237,7 +237,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 16),
 
                 //sign in button
                 SizedBox(
@@ -247,9 +247,9 @@ class _SignInState extends State<SignIn> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFCE2029),
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 18),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       elevation: 0,
                     ),
@@ -265,14 +265,14 @@ class _SignInState extends State<SignIn> {
                         : const Text(
                             'Sign In',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                   ),
                 ),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 16),
 
                 //sign up
                 Row(
@@ -302,8 +302,6 @@ class _SignInState extends State<SignIn> {
                     ),
                   ],
                 ),
-
-                const SizedBox(height: 20),
               ],
             ),
           ),

@@ -17,7 +17,6 @@ class DeveloperModel {
     required this.github,
   });
 
-  // Convert from JSON
   factory DeveloperModel.fromJson(Map<String, dynamic> json) {
     return DeveloperModel(
       id: json['id'],
@@ -30,7 +29,6 @@ class DeveloperModel {
     );
   }
 
-  // Convert to JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,

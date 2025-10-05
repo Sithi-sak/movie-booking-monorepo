@@ -290,17 +290,17 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen>
                     // Movie & Showtime Info Card
                     _buildInfoCard(),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
 
                     // Seat Details Card
                     _buildSeatDetailsCard(),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
 
                     // Price Breakdown Card
                     _buildPriceBreakdownCard(),
 
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 24),
 
                     // Action Buttons
                     if (!isBookingConfirmed) ...[
@@ -313,9 +313,9 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen>
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(100),
                             ),
-                            elevation: 8,
+                            elevation: 0,
                           ),
                           child: _isSubmitting
                               ? const SizedBox(
@@ -345,7 +345,7 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen>
                             side: const BorderSide(color: Colors.white54),
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(100),
                             ),
                           ),
                           child: const Text(

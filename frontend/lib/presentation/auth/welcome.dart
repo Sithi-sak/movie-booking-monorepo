@@ -55,7 +55,7 @@ class Welcome extends StatelessWidget {
               
               SizedBox(
                 width: double.infinity,
-                height: 56,
+                height: 44,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
@@ -65,7 +65,7 @@ class Welcome extends StatelessWidget {
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: const Text(
@@ -81,7 +81,7 @@ class Welcome extends StatelessWidget {
               
               SizedBox(
                 width: double.infinity,
-                height: 56,
+                height: 44,
                 child: OutlinedButton(
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
@@ -92,7 +92,7 @@ class Welcome extends StatelessWidget {
                     elevation: 0,
                     side: const BorderSide(color: Color(0xFFCE2029), width: 2),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: const Text(

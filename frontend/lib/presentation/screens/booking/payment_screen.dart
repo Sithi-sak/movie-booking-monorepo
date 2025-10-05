@@ -227,7 +227,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                 Container(
                   decoration: BoxDecoration(
                     color: AppTheme.surfaceDark.withValues(alpha: 0.5),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(100),
                   ),
                   child: IconButton(
                     icon: Icon(Icons.arrow_back_ios_new, color: AppTheme.textPrimary),
@@ -274,8 +274,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: Colors.blue.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.blue.withValues(alpha: 0.3)),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.blue.withValues(alpha: 0.3), width: 2),
                       ),
                       child: Row(
                         children: [
@@ -345,7 +345,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       },
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
 
                     // Card Holder Name
                     Text(
@@ -388,7 +388,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       },
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
 
                     // Expiry and CVV
                     Row(
@@ -532,7 +532,7 @@ class _PaymentScreenState extends State<PaymentScreen>
 
                     // Amount Summary
                     Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -540,7 +540,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                             AppTheme.primaryRed.withValues(alpha: 0.1),
                           ],
                         ),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: AppTheme.primaryRed.withValues(alpha: 0.3)),
                       ),
                       child: Row(
@@ -558,7 +558,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                             '\$${widget.totalAmount.toStringAsFixed(2)}',
                             style: TextStyle(
                               color: AppTheme.primaryRed,
-                              fontSize: 24,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -571,13 +571,13 @@ class _PaymentScreenState extends State<PaymentScreen>
                     // Pay Button
                     SizedBox(
                       width: double.infinity,
-                      height: 56,
+                      height: 44,
                       child: ElevatedButton(
                         onPressed: _isProcessing ? null : _processPayment,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppTheme.primaryRed,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(100),
                           ),
                           elevation: 0,
                         ),

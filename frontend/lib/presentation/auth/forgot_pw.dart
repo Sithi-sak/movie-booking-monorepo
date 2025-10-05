@@ -34,7 +34,7 @@ class ForgotPw extends StatelessWidget {
             const SizedBox(height: 12),
 
             Text(
-              'Enter your email address and we\ will send you a link to reset your password',
+              'Enter your email address and we will send you a link to reset your password',
               style: TextStyle(
                 color: Colors.grey[400],
                 fontSize: 14,

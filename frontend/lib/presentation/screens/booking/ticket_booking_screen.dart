@@ -274,7 +274,7 @@ class _TicketBookingScreenState extends State<TicketBookingScreen>
           Container(
             decoration: BoxDecoration(
               color: AppTheme.surfaceDark.withValues(alpha: 0.8),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(100),
             ),
             child: IconButton(
               icon: Icon(Icons.arrow_back_ios_new, color: AppTheme.textPrimary),
@@ -1392,7 +1392,7 @@ class _TicketBookingScreenState extends State<TicketBookingScreen>
             ),
           if (currentStep > 0) const SizedBox(width: 16),
           Expanded(
-            flex: 2,
+            flex: 1,
             child: ElevatedButton(
               onPressed: _canProceed() ? () {
                 if (currentStep == 2) {

@@ -127,8 +127,8 @@ class _SignUpState extends State<SignUp> {
                 const Text(
                   'Sign up to start booking movies',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
+                    color: Color.fromARGB(255, 194, 194, 194),
+                    fontSize: 14,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -309,9 +309,9 @@ class _SignUpState extends State<SignUp> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFCE2029),
                       foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 18),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       elevation: 0,
                     ),
@@ -327,14 +327,14 @@ class _SignUpState extends State<SignUp> {
                         : const Text(
                             'Sign Up',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                   ),
                 ),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 16),
 
                 //sign in
                 Row(
@@ -364,8 +364,6 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
-
-                const SizedBox(height: 20),
               ],
             ),
           ),
