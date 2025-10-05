@@ -36,12 +36,6 @@ SabayBook is a modern movie booking platform that allows users to browse movies,
 - 🎬 **Trailer Viewing** - Watch movie trailers with YouTube integration
 - 📱 **Responsive UI** - Beautiful dark-themed mobile interface
 
-### Admin Features (Backend)
-- Movie management with TMDB API integration
-- Theater and showtime management
-- Seat configuration and booking management
-- Payment tracking and status management
-
 ## 🛠 Tech Stack
 
 ### Backend
