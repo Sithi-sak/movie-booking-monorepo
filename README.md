@@ -513,11 +513,15 @@ Contributions are welcome! Please follow these steps:
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+**Copyright (c) 2025 Sithisak**
 
 ## 👥 Authors
 
-- Leak Sithisak, Song Kimvisal, Sim Kimchhun
+- **Leak Sithisak** - [@yourgithub](https://github.com/yourusername)
+- **Song Kimvisal** - [@yourgithub](https://github.com/yourusername)
+- **Sim Kimchhun** - [@yourgithub](https://github.com/yourusername)
 
 ## 🙏 Acknowledgments
 
