@@ -1,0 +1,41 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/  # uncomment if you want VSCode workspace settings ignored
+
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+**/doc/api/
+**/ios/Flutter/.last_build_id
+/build/
+.generated/
+
+# iOS
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# Android
+android/.gradle/
+android/app/build/
+android/local.properties  # contains local SDK path
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Symbolication / Obfuscation
+app.*.symbols
+app.*.map.json

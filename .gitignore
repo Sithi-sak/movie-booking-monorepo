@@ -1,0 +1,45 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Monorepo-specific
+accounts.txt
+
+# Logs
+*.log
+logs/
+
+# Environment variables (in case you add any at root level)
+.env
+.env.local
+.env.*.local
+
+# Build outputs (if you add build scripts at root)
+dist/
+build/
+
+# Dependency directories (backup ignore, subdirectories have their own)
+node_modules/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Git-related
+*.orig

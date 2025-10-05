@@ -1,0 +1,173 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  phone     String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  bookings Booking[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Movie {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String?
+  genre       String?
+  duration    Int? // in minutes
+  rating      String? // PG, PG-13, R, etc. (certification rating)
+  score       Float? // 0-10 numeric rating score
+  posterUrl   String?   @map("poster_url")
+  backdropUrl String?   @map("backdrop_url")
+  trailerUrl  String?   @map("trailer_url")
+  language    String?
+  director    String?
+  cast        Json? // Store as JSON array of cast members
+  releaseDate DateTime? @map("release_date")
+  status      String    @default("coming_soon") // "streaming_now" or "coming_soon"
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  showtimes Showtime[]
+
+  @@index([genre])
+  @@index([releaseDate])
+  @@index([isActive])
+  @@index([title])
+  @@index([status])
+  @@map("movies")
+}
+
+model Theater {
+  id        Int      @id @default(autoincrement())
+  name      String
+  address   String
+  city      String
+  state     String?
+  zipCode   String?  @map("zip_code")
+  phone     String?
+  screens   Int      @default(1)
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  showtimes Showtime[]
+  seats     Seat[]
+
+  @@index([city])
+  @@index([isActive])
+  @@map("theaters")
+}
+
+model Showtime {
+  id             Int      @id @default(autoincrement())
+  movieId        Int      @map("movie_id")
+  theaterId      Int      @map("theater_id")
+  screenNumber   Int      @map("screen_number")
+  showTime       DateTime @map("show_time")
+  availableSeats Int      @map("available_seats")
+  totalSeats     Int      @map("total_seats")
+  price          Float // Price per seat for this showtime
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  // Relations
+  movie    Movie     @relation(fields: [movieId], references: [id])
+  theater  Theater   @relation(fields: [theaterId], references: [id])
+  bookings Booking[]
+
+  @@index([movieId])
+  @@index([theaterId])
+  @@index([showTime])
+  @@index([movieId, theaterId])
+  @@index([showTime, isActive])
+  @@map("showtimes")
+}
+
+model Booking {
+  id               Int      @id @default(autoincrement())
+  userId           Int      @map("user_id")
+  showtimeId       Int      @map("showtime_id")
+  bookingReference String   @unique @map("booking_reference")
+  seats            String // JSON array of seat numbers
+  totalAmount      Float    @map("total_amount")
+  status           String   @default("confirmed") // confirmed, cancelled, expired
+  bookingDate      DateTime @default(now()) @map("booking_date")
+  paymentStatus    String   @default("pending") @map("payment_status") // pending, completed, failed, refunded
+  paymentReference String?  @map("payment_reference")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user         User          @relation(fields: [userId], references: [id])
+  showtime     Showtime      @relation(fields: [showtimeId], references: [id])
+  bookingSeats BookingSeat[]
+
+  @@index([userId])
+  @@index([showtimeId])
+  @@index([bookingReference])
+  @@index([status])
+  @@index([paymentStatus])
+  @@map("bookings")
+}
+
+model Seat {
+  id           Int     @id @default(autoincrement())
+  theaterId    Int     @map("theater_id")
+  screenNumber Int     @map("screen_number")
+  seatNumber   String  @map("seat_number") // A1, A2, B1, etc.
+  rowName      String  @map("row_name")
+  seatColumn   Int     @map("seat_column") // 1, 2, 3, etc. for UI positioning
+  seatType     String  @default("regular") @map("seat_type") // regular, premium, vip
+  price        Float? // Different pricing for different seat types
+  isActive     Boolean @default(true) @map("is_active")
+  isAisle      Boolean @default(false) @map("is_aisle") // For spacing in UI
+
+  // Relations
+  theater      Theater       @relation(fields: [theaterId], references: [id])
+  bookingSeats BookingSeat[]
+
+  @@index([theaterId])
+  @@index([theaterId, screenNumber])
+  @@index([seatType])
+  @@map("seats")
+}
+
+model BookingSeat {
+  id        Int       @id @default(autoincrement())
+  bookingId Int       @map("booking_id")
+  seatId    Int       @map("seat_id")
+  status    String    @default("confirmed") // confirmed, selected, held (for temporary holds)
+  heldUntil DateTime? @map("held_until") // For temporary seat holds during booking process
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  booking Booking @relation(fields: [bookingId], references: [id])
+  seat    Seat    @relation(fields: [seatId], references: [id])
+
+  @@map("booking_seats")
+}
