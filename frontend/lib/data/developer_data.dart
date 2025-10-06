@@ -1,4 +1,3 @@
-
 import 'package:movie_booking_app/data/models/developer_model.dart';
 
 class DeveloperData {
@@ -19,7 +18,7 @@ class DeveloperData {
       role: "Backend Developer",
       imageUrl: "assets/developer_pf/sithisak.jpg",
       description:
-          "Specialized in Flutter development, focusing on creating smooth user interfaces and implementing seat selection functionality.",
+          "Built the robust backend API handling movie data, booking management systems and implementing seat selection functionality.",
       email: "leak.sithisak@movieapp.com",
       github: "github.com/leaksithisak",
     ),
@@ -29,7 +28,7 @@ class DeveloperData {
       role: "Database Design / Analyst",
       imageUrl: "assets/developer_pf/kimchhun.jpg",
       description:
-          "Built the robust backend API handling movie data, user authentication, and booking management systems.",
+          "Database Design and Analyst, focusing on creating smooth user interfaces and user authentication using JWT token and password hashing",
       email: "sim.kimchhun@movieapp.com",
       github: "github.com/simkimchhun",
     ),
