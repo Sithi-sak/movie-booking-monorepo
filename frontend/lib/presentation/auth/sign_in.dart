@@ -3,6 +3,7 @@ import 'package:movie_booking_app/presentation/auth/forgot_pw.dart';
 import 'package:movie_booking_app/presentation/auth/sign_up.dart';
 import 'package:movie_booking_app/controllers/screen_controller.dart';
 import 'package:movie_booking_app/services/auth_service.dart';
+import 'package:movie_booking_app/presentation/screens/admin/admin_login_screen.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -301,6 +302,76 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                   ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // Divider
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 1,
+                        color: const Color(0xFF2A2A2A),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'OR',
+                        style: TextStyle(
+                          color: Color(0xFF666666),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 1,
+                        color: const Color(0xFF2A2A2A),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // Admin Access Button
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AdminLoginScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.shield_outlined,
+                      color: Color(0xFF2D5F4D),
+                      size: 20,
+                    ),
+                    label: const Text(
+                      'Admin Access',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF2D5F4D),
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      side: const BorderSide(
+                        color: Color(0xFF2D5F4D),
+                        width: 2,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

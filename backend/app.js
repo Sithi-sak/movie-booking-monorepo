@@ -13,6 +13,7 @@ import moviesRouter from './src/routes/movies.routes.js';
 import showtimesRouter from './src/routes/showtimes.routes.js';
 import bookingsRouter from './src/routes/bookings.routes.js';
 import ticketsRouter from './src/routes/tickets.routes.js';
+import adminRouter from './src/routes/admin.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,7 @@ app.use('/api/movies', moviesRouter);
 app.use('/api/showtimes', showtimesRouter);
 app.use('/api/bookings', bookingsRouter);
 app.use('/api/tickets', ticketsRouter);
+app.use('/api/admin', adminRouter);
 
 // Health check endpoint
 app.get('/', (req, res) => {

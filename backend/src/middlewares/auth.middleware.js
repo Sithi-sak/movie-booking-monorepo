@@ -4,9 +4,6 @@ import { verifyToken } from '../utils/jwt.js';
  * Authentication middleware
  * Protects routes by verifying JWT token
  * Usage: Add this middleware to any route that requires authentication
- *
- * Example:
- * router.get('/protected', authenticate, (req, res) => { ... });
  */
 export const authenticate = async (req, res, next) => {
   try {
